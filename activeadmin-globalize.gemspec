@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency "globalize", '~> 5.0.0'
 
   # development dependencies
-  s.add_development_dependency 'bundler', '>= 1.6.1'
+  s.add_development_dependency 'bundler', '~> 1.7.2'
   s.add_development_dependency 'rake'
   # Other development dependencies moved into Gemfile
 
