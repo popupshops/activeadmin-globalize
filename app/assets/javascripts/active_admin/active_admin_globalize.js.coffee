@@ -25,10 +25,11 @@ $ ->
       $dom = $(this)
       # true when tabs are used in show action, false in form
       showAction = $dom.hasClass('locale-selector')
+      $tabs = $("li > a", this)
 
       if !$dom.data("ready")
         $dom.data("ready", true)
-        $tabs = $("li > a", this)
+
         # content to toggle is different according to current action
         $contents = if showAction then $(this).siblings("div.field-translation") else $(this).siblings("fieldset")
 
@@ -40,15 +41,16 @@ $ ->
           $contents.filter($tab.attr("href")).show()
           e.preventDefault()
 
-        $tabs.eq(0).click()
-
         # Add button and other behavior is not needed in show action
-        return if showAction
+        if showAction
+          $tabs.filter('.current').click()
+          return
 
         # Collect tha available locales.
         availableLocales = []
         $tabs.not('.default').each ->
           availableLocales.push($('<li></li>').append($(this).clone().removeClass('active')))
+
 
         # Create a new tab as the root of the drop down menu.
         $addLocaleButton = $('<li class="add-locale"><a href="#">+</a></li>')
@@ -76,6 +78,7 @@ $ ->
 
         # Add the remove button to every tab.
         $tabs.not('.default').append($removeButton)
+
 
         # Add the new button at the end of the locale list.
         $dom.append($addLocaleButton)
@@ -133,7 +136,8 @@ $ ->
 
         #Initially update the buttons' status
         updateLocaleButtonsStatus($dom)
-        $tabs.filter('.default').click()
+        $tabs.filter('.default').click() #default is clicked in edit view, while current is click in show view.
+
 
   # this is to handle elements created with has_many
   $("a").bind "click", ->
