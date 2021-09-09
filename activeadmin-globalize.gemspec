@@ -16,10 +16,10 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*'] + %w(MIT-LICENSE README.md)
 
   s.add_dependency 'activeadmin'
-  s.add_dependency "globalize", '~> 5.0.0'
+  s.add_dependency "globalize"
 
   # development dependencies
-  s.add_development_dependency 'bundler', '~> 1.7.2'
+  s.add_development_dependency 'bundler'
   s.add_development_dependency 'rake'
   # Other development dependencies moved into Gemfile
 
