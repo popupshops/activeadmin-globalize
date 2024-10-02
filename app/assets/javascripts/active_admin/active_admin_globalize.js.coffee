@@ -10,7 +10,6 @@ $ ->
       else
         $dom.find('.add-locale').show()
 
-
     # Hides or shows the locale tab and its corresponding element in the add menu.
     toggleTab = ($tab, active) ->
       $addButton = $tab.parents('ul').find('.add-locale li:has(a[href="' + $tab.attr('href') + '"])')
@@ -46,15 +45,18 @@ $ ->
           $tabs.filter('.current').click()
           return
 
-        # Collect tha available locales.
+        # Collect the available locales.
         availableLocales = []
         $tabs.not('.default').each ->
           availableLocales.push($('<li></li>').append($(this).clone().removeClass('active')))
 
-
         # Create a new tab as the root of the drop down menu.
         $addLocaleButton = $('<li class="add-locale"><a href="#">+</a></li>')
         $addLocaleButton.append($('<ul></ul>').append(availableLocales))
+
+        # Prevent default action on the add locale link
+        $addLocaleButton.find('a').click (e) ->
+          e.preventDefault()
 
         # Handle locale addition
         $addLocaleButton.find('ul a').click (e) ->
@@ -78,7 +80,6 @@ $ ->
 
         # Add the remove button to every tab.
         $tabs.not('.default').append($removeButton)
-
 
         # Add the new button at the end of the locale list.
         $dom.append($addLocaleButton)
@@ -137,8 +138,7 @@ $ ->
 
         #Initially update the buttons' status
         updateLocaleButtonsStatus($dom)
-        $tabs.filter('.default').click() #default is clicked in edit view, while current is click in show view.
-
+        $tabs.filter('.default').click() # default is clicked in edit view, while current is clicked in show view.
 
   # this is to handle elements created with has_many
   $("a").bind "click", ->
